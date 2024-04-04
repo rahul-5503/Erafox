@@ -541,8 +541,8 @@
             </div>
             <div class="row mt-50">
                <div class="col-xs-12 text-center">
-                  <form name="contact-form about-booking" id="contactForm"  method="POST" novalidate>
-                     <input type="hidden" name="form_type" value="form1">
+                  <form name="contact-form " id="contactForm"  method="POST" novalidate>
+                     <input type="hidden" name="form_type" value="contactForm">
                      <div class="row">
                         <div class="col-md-4">
                            <div class="form-group">
@@ -560,7 +560,7 @@
                         <div class="col-md-4">
                            <div class="form-group">
                               <label class="sr-only" for="phone">Phone No</label>
-                              <input type="number" name="subject" class="form-control" id="phone" placeholder="Phone No" onkeyup="validatephoneab()">
+                              <input type="number" name="phone" class="form-control" id="phone" placeholder="Phone No" onkeyup="validatephoneab()">
                               <div class="invalid-feedback" id="phoneab-error" ></div>
                            </div>
                         </div>
@@ -569,7 +569,7 @@
                         <label class="sr-only" for="message">Message</label>
                         <textarea name="message" class="form-control" id="message" rows="7" placeholder="Your Message"></textarea>
                      </div>
-                     <button type="submit" name="submit" class="btn btn-primary btn-lg" onsubmit="submitform(contactForm)">Submit</button>
+                     <button type="submit" name="submit" class="btn btn-primary btn-lg" >Submit</button>
                   </form>
             </div>
          </div>
@@ -695,33 +695,17 @@
         phoneInput.classList.add('isphone');
         return true;
      }
-         function submitform(formId) {
-            event.preventDefault();
-            var form = document.getElementById(formId);
-            var formData = new FormData(form);
-            var email = form.querySelector('[name="email"]').value;
-            var phone = form.querySelector('[name="phone"]').value;
-           // var emailsError = document.getElementById('submitab-error');
-             console.log('one')
-    
-         //   trimitem(passengerab,"passengerab-error")?true:document.getElementById('passengerab').focus();
-             var emailval= validateemailab();
-             var phone=validatephoneab();
-             if(emailval ){
-             console.log("valid") 
-             return true;
-             }
-             else{
-             console.log("invalid");
-             focusInputField();    
-             return false;
-             }
-             console.log(formData)
-            fetch('http://localhost', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
+        
+     document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+        var formData = new FormData(this); // Create FormData object with form data
+
+        // Send form data to PHP script using fetch API
+        fetch('http://localhost', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
                 // Handle response
                 if (response.ok) {
                     // Form submitted successfully
@@ -731,7 +715,7 @@
                         icon: 'success'
                     });
                     console.log('Form submitted successfully');
-                    alert('Form 1 submitted');
+                   
                 } else {
                     // Error handling
                     Swal.fire({
@@ -744,8 +728,8 @@
             })
             .catch(error => {
                 console.error('Error submitting form:', error);
-            });
-        }
+            });}
+     )
 
          function vidplay() {
            var video = document.getElementById("videoPlayer");

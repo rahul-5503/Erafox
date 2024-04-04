@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+</head>
+<body>
+
+<h2>Contact Form</h2>
+
+<form name="contact-form" id="contactForm" method="POST" novalidate>
+    <input type="hidden" name="form_type" value="contactForm">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+        <label for="phone">Phone:</label>
+        <input type="tel" name="phone" id="phone" required>
+    </div>
+    <div>
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" rows="4" required></textarea>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+        var formData = new FormData(this); // Create FormData object with form data
+
+        // Send form data to PHP script using fetch API
+        fetch('http://localhost', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            // Handle response
+            if (response.ok) {
+                console.log('Form submitted successfully');
+                alert('Form submitted successfully');
+            } else {
+                console.error('Error submitting form:', response.statusText);
+                alert('Error submitting form');
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
+            alert('Error submitting form');
+        });
+    });
+</script>
+
+</body>
+</html>
